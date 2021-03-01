@@ -60,6 +60,7 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         //
+        return view('project.show', compact('project'));
     }
 
     /**
@@ -71,6 +72,7 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         //
+        return view('project.edit',compact('project'));
     }
 
     /**
@@ -83,6 +85,12 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project)
     {
         //
+        $project->title = request('title'); //on set le titre avec la donnée envoyée du formulaire
+        $project->description = request('description');
+
+        $project->update(request(['title', 'description'])); // on enregistre dans la base
+        return redirect('/project'); // méthode pour rediriger vers une autre url (en get par défaut)
+
     }
 
     /**
@@ -94,5 +102,8 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         //
+        $project->delete();
+
+        return redirect('/project');
     }
 }
