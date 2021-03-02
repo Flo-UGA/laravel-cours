@@ -41,12 +41,24 @@ class ProjectController extends Controller
         //
         // return request()->all(); //pour récupérer les informations du formulaire
 
-        $project = new Project(); //on instancie un nouveau projet
+        /* $project = new Project(); //on instancie un nouveau projet
 
-        $project->title = request('title'); //on set le titre avec la donnée envoyée du formulaire
-        $project->description = request('description');
+         * $project->title = request('title'); //on set le titre avec la donnée envoyée du formulaire
+         * $project->description = request('description');
 
-        $project->save(); // on enregistre dans la base
+         * $project->save(); // on enregistre dans la base */
+        
+        /* $validation = request()->validate([
+         *     'title' => ['required', 'min:3', 'max:255'],
+         *     'description' => 'required'
+         * ]); */
+
+        Project::create(request()->validate([
+            'title' => ['required', 'min:3', 'max:255'],
+            'description' => 'required'
+        ]));
+
+        /* Project::create(request(['title','description'])); */
 
         return redirect('/project'); // méthode pour rediriger vers une autre url (en get par défaut)
     }
