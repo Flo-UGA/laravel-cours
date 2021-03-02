@@ -13,5 +13,9 @@ class Project extends Model
         'title','description'
     ];
     //protected $guarded = [];
-    
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
