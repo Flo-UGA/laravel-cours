@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Events\ProjectCreated;
 
 class ProjectController extends Controller
 {
@@ -53,14 +55,23 @@ class ProjectController extends Controller
          *     'description' => 'required'
          * ]); */
 
-        Project::create(request()->validate([
+        $project = Project::create(request()->validate([
             'title' => ['required', 'min:3', 'max:255'],
             'description' => 'required'
         ]));
 
+        /* Mail::raw('Projet créé', function ($message) {
+         *     $message->to('admin@monsite.com')
+         *             ->subject('Un nouveau projet');
+         * }); */
+
         /* Project::create(request(['title','description'])); */
 
-        return redirect('/project'); // méthode pour rediriger vers une autre url (en get par défaut)
+        ProjectCreated::dispatch($project);
+        /* event(new ProjectCreated(request('title'))); */
+
+        return redirect('/project')
+             ->with('message', 'Projet créé');  // méthode pour rediriger vers une autre url (en get par défaut)
     }
 
     /**

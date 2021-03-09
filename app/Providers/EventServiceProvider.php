@@ -7,6 +7,10 @@ use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 
+
+use App\Events\ProjectCreated;
+use App\Listeners\SuiviManager;
+
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -17,7 +21,10 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
-        ],
+        ]/* ,
+            ProjectCreated::class => [
+          *    SuiviManager::class
+            ] */
     ];
 
     /**
@@ -28,5 +35,10 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+    }
+
+    public function shouldDiscoverEvents()
+    {
+        return true;
     }
 }

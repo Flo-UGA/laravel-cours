@@ -3,6 +3,12 @@
 @section('title','Project')
 
 @section('content')
+
+      @if (session('message'))
+        <div>
+            {{ session('message')}}
+        </div>
+      @endif
   
   <ul>
         @foreach ($projects as $project )
