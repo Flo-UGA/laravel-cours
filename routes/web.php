@@ -23,6 +23,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
 Route::get('/', [PagesController::class, 'home']);
 Route::get('/contact', [PagesController::class, 'contact']);
+Route::get('/welcome', function () {
+      return view('welcome');
+});
+
 
 /* Route::get('/welcome', function () {
  *     return view('welcome');
@@ -57,3 +61,7 @@ use App\Http\Controllers\ProjectController;
  * Route::post('/project', [ProjectController::class, 'store']); */
 
 Route::resource('project', ProjectController::class); 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');;
